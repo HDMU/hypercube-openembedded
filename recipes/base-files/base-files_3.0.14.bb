@@ -1,14 +1,13 @@
 DESCRIPTION = "Miscellaneous files for the base system."
 SECTION = "base"
 PRIORITY = "required"
-PR = "r100"
+PR = "r102"
 LICENSE = "GPL"
 
 FSTAB = "fstab"
 
 SRC_URI = " \
            file://nsswitch.conf \
-           file://motd \
            file://inputrc \
            file://host.conf \
            file://profile \
@@ -69,7 +68,7 @@ hostname_slugos = "nslu2"
 hostname_mnci = "MNCI"
 hostname_rt3000 = "MNRT"
 hostname_jlime = "JLime"
-hostname_arm = "su980"
+hostname_arm = "HYPERCUBE"
 
 do_install () {
 	for d in ${dirs755}; do

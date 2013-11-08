@@ -4,5 +4,5 @@
 [ -f /etc/videomode ] && cat /etc/videomode > /proc/stb/video/videomode
 
 BOOTLOGO=/usr/share/bootlogo.mvi
-[ -f /etc/enigma2/bootlogo.mvi ] && BOOTLOGO=/etc/enigma2/bootlogo.mvi
+[ -f /boot/bootlogo.mvi ] && BOOTLOGO=/boot/bootlogo.mvi
 /usr/bin/showiframe ${BOOTLOGO}

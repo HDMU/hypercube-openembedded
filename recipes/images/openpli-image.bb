@@ -8,13 +8,18 @@ BOOTLOGO ?= "openpli-bootlogo"
 IMAGE_INSTALL = "task-base\
 				netkit-base \
 				vsftpd \
+				util-linux-ng-fdisk \
 				util-linux-ng-sfdisk \
 				avahi-daemon \
+				ffmpeg \
 				fakelocale \
 				timezones-alternative \
 				${BOOTLOGO} \
+				bmc-libshowiframe \
 				tuxbox-links \
 				cifs \
+				flac \
+				mtd-utils \
 				samba \
 				early-configure \
 				e2fsprogs-mke2fs \

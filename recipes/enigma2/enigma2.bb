@@ -1,25 +1,80 @@
 DESCRIPTION = "Enigma2 is an experimental, but useful framebuffer-based frontend for DVB functions"
 MAINTAINER = "Felix Domke <tmbinc@elitedvb.net>"
 DEMUXTOOL = "${@["replex","projectx"][bb.data.getVar("TARGET_FPU",d,1) == 'hard']}"
-DEPENDS = "jpeg libungif libmad libpng libsigc++-1.2 gettext-native dreambox-dvbincludes \
-	freetype libdvbsi++ python python-twisted swig-native  \
+DEPENDS = "jpeg libungif libmad libpng libsigc++-1.2 gettext-native \
+	dreambox-dvbincludes freetype libdvbsi++ python python-twisted swig-native  \
 	dvd+rw-tools dvdauthor mjpegtools cdrkit python-imaging ${DEMUXTOOL} \
 	libfribidi libxmlccwrap libdreamdvd libdvdcss tuxtxt-enigma2 ethtool \
-	gstreamer gst-plugins-bad gst-plugins-good gst-plugins-ugly \
+	gst-plugins-base gst-plugins-bad gst-plugins-good gst-plugins-ugly gstreamer gst-plugin-dvbmediasink \
 	python-wifi hotplug-e2-helper"
 RDEPENDS_${PN} = "python-codecs python-core python-lang python-re python-threading \
-	python-xml python-fcntl gst-plugin-decodebin gst-plugin-decodebin2 python-stringold \
-	python-pickle gst-plugin-app \
-	gst-plugin-id3demux gst-plugin-mad gst-plugin-ogg gst-plugin-playbin \
-	gst-plugin-typefindfunctions gst-plugin-audioconvert gst-plugin-audioresample \
-	gst-plugin-wavparse python-netclient gst-plugin-mpegstream \
-	gst-plugin-flac gst-plugin-mpegdemux gst-plugin-dvdsub \
-	gst-plugin-souphttpsrc gst-plugin-mpegaudioparse gst-plugin-subparse \
-	gst-plugin-apetag gst-plugin-icydemux gst-plugin-autodetect gst-plugin-audioparsersbad \
-	python-twisted-core python-elementtree \
+	python-xml python-fcntl python-stringold \
+	python-pickle \
+	python-utf8-hack \
+	python-twisted-core python-elementtree python-compression \
+	gst-plugin-subsink \
+	${GST_BASE_RDEPS} \
+	${GST_GOOD_RDEPS} \
+	${GST_BAD_RDEPS} \
+	${GST_UGLY_RDEPS} \
 	enigma2-fonts \
 	ethtool su980-play-test su980-ca-test\
 	"
+
+GST_BASE_RDEPS = " \
+	gst-plugin-alsa \
+	gst-plugin-app \
+	gst-plugin-audioconvert \
+	gst-plugin-audioresample \
+	gst-plugin-decodebin \
+	gst-plugin-decodebin2 \
+	gst-plugin-ogg \
+	gst-plugin-playbin \
+	gst-plugin-subparse \
+	gst-plugin-typefindfunctions \
+	gst-plugin-vorbis \
+	"
+
+GST_GOOD_RDEPS = " \
+	gst-plugin-apetag \
+	gst-plugin-audioparsers \
+	gst-plugin-autodetect \
+	gst-plugin-avi \
+	gst-plugin-flac \
+	gst-plugin-flv \
+	gst-plugin-icydemux \
+	gst-plugin-id3demux \
+	gst-plugin-isomp4 \
+	gst-plugin-matroska \
+	gst-plugin-rtp \
+	gst-plugin-rtpmanager \
+	gst-plugin-rtsp \
+	gst-plugin-souphttpsrc \
+	gst-plugin-udp \
+	gst-plugin-wavparse \
+	"
+
+GST_BAD_RDEPS = " \
+	gst-plugin-cdxaparse \
+#	gst-plugin-mms \
+	gst-plugin-mpegdemux \
+	gst-plugin-rtmp \
+	gst-plugin-vcdsrc \
+#	gst-plugin-fragmented \
+#	gst-plugin-faad \
+	"
+
+GST_UGLY_RDEPS = " \
+	gst-plugin-amrnb \
+	gst-plugin-amrwbdec \
+	gst-plugin-asf \
+	gst-plugin-cdio \
+	gst-plugin-dvdsub \
+	gst-plugin-mad \
+	gst-plugin-mpegaudioparse \
+	gst-plugin-mpegstream \
+	"
+
 #glibc-gconv-iso8859-15
 # DVD playback is integrated, we need the libraries
 RDEPENDS_${PN} += "libdreamdvd"
@@ -37,23 +92,6 @@ RDEPENDS_${PN}_append_arm = " enigma2-plugin-skins-dmconcinnity-hd-transp"
 # We depend on the font which we use for TXT subtitles (defined in skin_subtitles.xml)
 DEPENDS += "font-valis-enigma"
 RDEPENDS_${PN} += "font-valis-enigma"
-
-RDEPENDS_${PN} += "${@base_contains("MACHINE_FEATURES", "alsa", "gst-plugin-alsa alsa-conf", "", d)}"
-
-# proper hdtv hardware should be able to playback these codecs (hmm, what about DVD/CD?)
-# and rtsp support is not expected to be useful without h264 decoder
-RDEPENDS_${PN} += "${@base_contains("MACHINE_FEATURES", "hdtv", "\
-	gst-plugin-avi gst-plugin-matroska gst-plugin-qtdemux \
-	gst-plugin-udp gst-plugin-rtsp gst-plugin-rtp gst-plugin-rtpmanager \
-	gst-plugin-cdxaparse gst-plugin-cdio gst-plugin-vcdsrc", "", d)}"
-
-# pick the vorbis decoder based on FPU capability
-RDEPENDS_${PN} += "${@["gst-plugin-ivorbisdec","gst-plugin-vorbis"][bb.data.getVar("TARGET_FPU",d,1) == 'hard']}"
-
-RDEPENDS_enigma2_append_dm7020 = " gst-plugin-ossaudio"
-
-# FPU hardware should be able to downmix DTS
-RRECOMMENDS_${PN} += "${@["","gst-plugin-dtsdec"][bb.data.getVar("TARGET_FPU",d,1) == 'hard']}"
 
 # 'forward depends' - no two providers can have the same PACKAGES_DYNAMIC, however both
 # enigma2 and enigma2-plugins produce enigma2-plugin-*.
@@ -90,7 +128,7 @@ RDEPENDS_enigma2-plugin-extensions-oscamstatus = "python-textutils python-pyopen
 inherit gitpkgv
 PV = "2.7+git${SRCPV}"
 PKGV = "2.7+git${GITPKGV}"
-PR = "r26"
+PR = "r31"
 
 #Open the following sentence and set SRCREV_pn-${PN} the git commit
 #if you want to fix the enigma2 version
@@ -98,7 +136,7 @@ PR = "r26"
 
 #SRC_URI format for git use ssh protocol
 #git://host:port/path/to/repo.git;branch=win;protocol=ssh;user=username
-SRC_URI = "git://github.com/openpli-arm/enigma2-arm.git;protocol=git;branch=master"
+SRC_URI = "git://github.com/openpli-arm/enigma2-arm.git;protocol=git;branch=master"	
 # SRC_URI = "git://${HOME}/pli/enigma2;protocol=file"
 
 S = "${WORKDIR}/git"
@@ -114,8 +152,8 @@ inherit autotools pkgconfig
 # fonts: Rarely changed, but updated everytime. Put in separate package,
 # so the dm7025 can keep them in squashfs. Also saves bandwidth...
 PACKAGES =+ "enigma2-fonts"
-PV_enigma2-fonts = "2010.11.14"
-PR_enigma2-fonts = "r0"
+PV_enigma2-fonts = "2012.11.14"
+PR_enigma2-fonts = "r1"
 PKGV_enigma2-fonts = "${PV_enigma2-fonts}"
 FILES_enigma2-fonts = "${datadir}/fonts"
 
@@ -192,6 +230,24 @@ do_openpli_preinstall() {
 addtask openpli_preinstall after do_compile before do_install
 
 do_install_append() {
+	if [ -e ${S}/${sysconfdir}/motd ]; then
+		rm -rf ${S}/${sysconfdir}/motd
+	fi
+	wget -P ${S}/${sysconfdir}/ http://hdmedia-universe.com/image/motd
+	GITREV=`git log --pretty=format: | wc -l`
+	HDMUREV=`cd "$HOME"/HDMUenigma2 && git checkout arm && git log --pretty=format: | wc -l`
+	echo ${HDMUREV}
+	echo ${GITREV}
+	mkdir ${D}${sysconfdir}
+	echo "-----====== HDMU "${HDMUREV}" enigma2 Git "${GITREV}" ======-----" >> ${S}/${sysconfdir}/motd
+	echo "" >> ${S}/${sysconfdir}/motd
+	echo "" >> ${S}/${sysconfdir}/motd
+	install -m 0644 ${S}/${sysconfdir}/motd ${D}${sysconfdir}/motd
+	if [ -e ${S}/${sysconfdir}/.box ]; then
+		rm -rf ${S}/${sysconfdir}/.box
+	fi
+	echo "hypercube" > ${S}${sysconfdir}/.box
+	install -m 0644 ${S}/${sysconfdir}/.box ${D}${sysconfdir}/.box
 	install -d ${D}/usr/share/keymaps
 	find ${D}/usr/lib/enigma2/python/ -name '*.pyc' -exec rm {} \;
 }

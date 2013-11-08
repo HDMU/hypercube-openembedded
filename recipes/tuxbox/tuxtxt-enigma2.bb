@@ -13,7 +13,7 @@ PR = "r0"
 
 FILES_${PN}-dbg = "/usr/lib/.debug"
 FILES_${PN}-src = "/usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/*.py"
-FILES_${PN} = "/usr/lib/libtuxtxt32bpp.so* /usr/share/fonts /usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/*.pyo /etc/tuxtxt"
+FILES_${PN} = "/usr/lib/libtuxtxt32bpp.so* /usr/share/fonts /usr/lib/enigma2/python/Plugins/Extensions/Tuxtxt/*.py /etc/tuxtxt"
 
 inherit autotools pkgconfig
 

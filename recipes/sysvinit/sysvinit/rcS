@@ -97,6 +97,11 @@ do
         fi
 done
 
+if [ -e /etc/.emustart ]; then
+	emu=`cat /etc/.emustart`
+	$emu &
+fi
+
 #
 #	For compatibility, run the files in /etc/rc.boot too.
 #

@@ -1,5 +1,5 @@
 DESCRIPTION = "Configuration files for 3rd-party feeds"
-PR = "r0"
+PR = "r1"
 
 FEEDS = "3rd-party"
 

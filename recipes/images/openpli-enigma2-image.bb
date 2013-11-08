@@ -2,23 +2,21 @@ require openpli-image.bb
 
 #enigma2-plugin-pli-ppanel 
 ENIGMA2_PLUGINS = " \
-				enigma2-plugin-pli-softcamsetup \
-				enigma2-plugin-extensions-audiosync \
+#				enigma2-plugin-extensions-audiosync \
 				enigma2-plugin-systemplugins-softwaremanager \
 				enigma2-plugin-systemplugins-positionersetup \
 				enigma2-plugin-extensions-cutlisteditor \
 				enigma2-plugin-systemplugins-satfinder \
 				enigma2-plugin-systemplugins-videotune \
 				enigma2-plugin-extensions-mediascanner \
-				enigma2-plugin-extensions-webinterface \
+#				enigma2-plugin-extensions-webinterface \
 				enigma2-plugin-extensions-graphmultiepg \
 				enigma2-plugin-systemplugins-skinselector \
 				enigma2-plugin-extensions-pictureplayer \
-#				enigma2-plugin-extensions-mediaplayer \
-#				enigma2-plugin-systemplugins-networkbrowser \
+				enigma2-plugin-extensions-mediaplayer \
+				enigma2-plugin-systemplugins-networkbrowser \
 				enigma2-plugin-systemplugins-fastscan \
 				enigma2-plugin-systemplugins-osdpositionsetup \
-				enigma2-plugin-extensions-oscamstatus \
 				enigma2-plugin-extensions-factorytest \
 				${@base_contains("MACHINE_FEATURES", "nohotplug", "", "enigma2-plugin-systemplugins-hotplug", d)} \
 				${@base_contains("MACHINE_FEATURES", "dvb-c", "enigma2-plugin-systemplugins-cablescan" , "", d)} \
@@ -29,7 +27,7 @@ ENIGMA2_PLUGINS = " \
 				${@base_contains("MACHINE_FEATURES", "wifi", "enigma2-plugin-systemplugins-wirelesslan", "", d)} \
 				"
 #Archer:Add oscam plugin in openpli image 
-ENIGMA2_PLUGINS_append_arm = "enigma2-plugin-softcams-oscam-experimental su980-uboot-tools"
+ENIGMA2_PLUGINS_append_arm = "su980-uboot-tools"
 DEPENDS += "enigma2 enigma2-plugins enigma2-pliplugins"
 
 ENIGMA2_OPTIONAL = " \
@@ -56,11 +54,43 @@ IMAGE_INSTALL += " \
 				${ENIGMA2_PLUGINS} \
 				enigma2-streamproxy \
 				aio-grab \
+				python-pyopenssl \
+				python-codecs \
+				python-core \
+				python-crypt \
+				python-gdata \
+				python-cheetah \
+				python-json \
+				python-unixadmin \ 
+				python-misc \
+				python-html \
+				python-fcntl \
+				python-lang \
+				python-netclient \
+				python-netserver \
+				python-pickle \
+				python-re \
+				python-shell \
+				python-resource \
+				python-threading \
+				python-twisted \
+				python-daap \
+				python-twisted-mail \
+				python-twisted-names \
+				python-compression \
+				python-mime \
+				python-subprocess \
+				python-email \
+				python-twisted-core \
+				python-twisted-web \
+				python-xml \
+				python-pyxml \
+				python-zlib \
+				python-zopeinterface \
 				tuxbox-common \
 				libavahi-client \
 				settings-autorestore \
 				libstdc++\
-				oscam-experimental\
 				dvb-apps\
 				ntfs-3g\
 				"
@@ -113,11 +143,11 @@ MACHINE_POSTPROCESS_COMMAND = "\
 	mkdir release;\
 	rm -rf su980;\
 	export VERSION=`date +%Y%m%d`;\
-	cp openpli-enigma2-2.0-dm800.rootfs.tar.gz release/openpli-enigma2-2.0-su980-${VERSION}.rootfs.tar.gz;\
+	cp openpli-enigma2-2.0-dm800.rootfs.tar.gz release/HDMU_Hypercube_OE.rootfs.tar.gz;\
 #Generate e2 image \
 	${POPULATE_UPGRADE_SCRIPT}\
 	${POPULATE_BOOTLOADER}\
 	${POPULATE_E2}\
-	tar -czvf release/su980-e2-${VERSION}.tar.gz su980;\
+	zip -r release/HDMU_Hypercube_OE_Flash.zip su980;\
 	rm -rf su980;\
 "

@@ -6,20 +6,16 @@ PRIORITY = "required"
 
 DEPENDS = "zlib"
 
-INC_PR = "r2"
+INC_PR = "r3"
 
 BBCLASSEXTEND = "native"
 
-SRC_URI = "${SOURCEFORGE_MIRROR}/libpng/libpng-${PV}.tar.bz2;name=libpng"
+RPROVIDES += "libpng3"
+
+SRC_URI = "ftp://ftp.simplesystems.org/pub/png/src/libpng-${PV}.tar.bz2;name=libpng"
 S = "${WORKDIR}/libpng-${PV}"
 
 inherit autotools pkgconfig binconfig
 
-PACKAGES =+ "libpng3 libpng12"
-
-FILES_libpng3 = "${libdir}/libpng.so.*"
-FILES_libpng12 = "${libdir}/libpng12.so.*"
-FILES_${PN}-dev = "${includedir} ${libdir}/lib*.so ${libdir}/*.la \
-		${libdir}/*.a ${libdir}/pkgconfig \
-		${datadir}/aclocal ${bindir} ${sbindir}"
-
+FILES_${PN} = "${libdir}/lib*.so.*"
+FILES_${PN}-dev += " ${bindir} ${sbindir}"

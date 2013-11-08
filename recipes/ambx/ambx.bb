@@ -12,15 +12,14 @@ PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 PR = "r0"
 
-SRC_URI = "git://openpli.git.sourceforge.net/gitroot/openpli/plugin-ambx;protocol=git"
+SRC_URI = "git://git.code.sf.net/p/openpli/plugin-ambx;protocol=git"
 
 S = "${WORKDIR}/git"
 
 # Dunno why, but it won't build in parallel
 PARALLEL_MAKE = ""
 
-# All machine types are supported now
-EXTRA_OECONF = "--with-machine=${MACHINE}"
+EXTRA_OECONF = "--with-chipset=${CHIPSET}"
 inherit autotools
 
 FILES_${PN}-test = "/usr/bin/unittest /usr/bin/grabvid /usr/bin/testambx"

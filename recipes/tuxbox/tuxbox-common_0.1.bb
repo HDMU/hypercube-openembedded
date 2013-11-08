@@ -2,7 +2,7 @@ DESCRIPTION = "Tuxbox common files"
 LICENSE = "CLOSED"
 MAINTAINER = "PLi team"
 
-PR = "r0"
+PR = "r1"
 
 VERSION := "${PV}"
 PV = "${VERSION}+svn${SRCPV}"

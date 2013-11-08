@@ -1,7 +1,7 @@
 #SRCREV = "${AUTOREV}"
 SRCREV = "886"
 PV = "1.0+svnr${SRCPV}"
-PR = "r0"
+PR = "r10"
 
 SRC_URI = "svn://project-valerie.googlecode.com/svn/trunk;proto=http;module=${MODULE}"
 S = "${WORKDIR}/${MODULE}"

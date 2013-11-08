@@ -1,14 +1,12 @@
 DESCRIPTION = "The git revision control system used by the Linux kernel developers"
 SECTION = "console/utils"
-LICENSE = "GPL"
+LICENSE = "GPLv2"
 
-SRC_URI = "http://mirror.linux.org.au/software/scm/git/git-${PV}.tar.bz2;name=src"
+SRC_URI = "${KERNELORG_MIRROR}/pub/software/scm/git/git-${PV}.tar.bz2;name=src"
 
 S = "${WORKDIR}/git-${PV}"
 
 inherit autotools
-
-EXTRA_OEMAKE = "NO_TCLTK=1"
 
 do_install () {
 	oe_runmake install DESTDIR="${D}" bindir=${bindir} \

@@ -274,17 +274,17 @@ if [ -e ${IMAGE_ROOTFS}/usr/bin/opkg-cl ] ; then
 	fi
 	rm -f ${IMAGE_ROOTFS}${libdir}/opkg/lists/*
 
-    for i in ${IMAGE_ROOTFS}${libdir}/opkg/info/*.preinst; do
-        if [ -f $i ] && ! sh $i; then
-            opkg-cl ${IPKG_ARGS} flag unpacked `basename $i .preinst`
-        fi
-    done
+	for i in ${IMAGE_ROOTFS}${libdir}/opkg/info/*.preinst; do
+		if [ -f $i ] && ! sh $i; then
+			opkg-cl ${IPKG_ARGS} flag unpacked `basename $i .preinst`
+		fi
+	done
 
-    for i in ${IMAGE_ROOTFS}${libdir}/opkg/info/*.postinst; do
-        if [ -f $i ] && ! sh $i configure; then
-            opkg-cl ${IPKG_ARGS} flag unpacked `basename $i .postinst`
-        fi
-    done
+	for i in ${IMAGE_ROOTFS}${libdir}/opkg/info/*.postinst; do
+		if [ -f $i ] && ! sh $i configure; then
+			opkg-cl ${IPKG_ARGS} flag unpacked `basename $i .postinst`
+		fi
+	done
 
 fi
 }

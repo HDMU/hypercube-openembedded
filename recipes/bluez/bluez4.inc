@@ -4,7 +4,7 @@ SECTION = "libs"
 PRIORITY = "optional"
 LICENSE = "GPLv2/LGPLv2.1"
 DEPENDS = "gst-plugins-base alsa-lib virtual/libusb0 dbus-glib"
-INC_PR = "r7"
+INC_PR = "r8"
 
 # temporary solution until bug 5176 is properly fixed
 PROVIDES += "bluez-utils bluez-libs bluez-utils-dbus"
@@ -12,7 +12,7 @@ RPROVIDES_bluez4 += "bluez-utils bluez-libs bluez-utils-dbus"
 RPROVIDES_bluez4-dev = "bluez-libs-dev"
 
 SRC_URI = "\
-  http://www.kernel.org/pub/linux/bluetooth/bluez-${PV}.tar.gz \
+  ${KERNELORG_MIRROR}/pub/linux/bluetooth/bluez-${PV}.tar.gz \
   file://fix-dfutool-usb-declaration-mismatch.patch \
   file://sbc-thumb.patch \
   file://bluetooth.conf \
@@ -20,7 +20,6 @@ SRC_URI = "\
 S = "${WORKDIR}/bluez-${PV}"
 
 inherit autotools update-rc.d
-AUTOTOOLS_STAGE_PKGCONFIG = "1"
 
 EXTRA_OECONF = "\
   --enable-gstreamer \
@@ -56,7 +55,7 @@ INITSCRIPT_PARAMS = "defaults 23 19"
 PACKAGES =+ "gst-plugin-bluez libasound-module-bluez"
 
 FILES_gst-plugin-bluez = "${libdir}/gstreamer-0.10/lib*.so"
-FILES_libasound-module-bluez = "${libdir}/alsa-lib/lib*.so"
+FILES_libasound-module-bluez = "${libdir}/alsa-lib/lib*.so ${datadir}/alsa/bluetooth.conf"
 FILES_${PN} += "${libdir}/bluetooth/plugins/*.so ${base_libdir}/udev"
 FILES_${PN}-dev += "\
   ${libdir}/bluetooth/plugins/*.la \

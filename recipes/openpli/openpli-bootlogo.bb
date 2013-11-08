@@ -6,8 +6,8 @@ MAINTAINER = "PLi team"
 
 RDEPENDS_${PN} += "virtual/showiframe"
 
-PV = "2.1"
-PR = "r6"
+PV = "2.2"
+PR = "r7"
 
 S = "${WORKDIR}/"
 
@@ -40,18 +40,18 @@ MVISYMLINKS = "bootlogo_wait backdrop"
 
 do_install() {
 	install -d ${D}/boot
-	install -d ${D}/usr/share
+#	install -d ${D}/usr/share
 	${@base_contains("MACHINE_FEATURES", "dreambox", "install -m 0755 ${S}/bootlogo-${MACHINE}-${BINARY_VERSION}.elf ${D}/boot/bootlogo.elf; install -m 0755 ${S}/bootlogo.jpg ${D}/boot/", "", d)}
-	install -m 0755 ${BOOTLOGOMVI} ${D}/usr/share/bootlogo.mvi
-	ln -sf /usr/share/bootlogo.mvi ${D}/boot/bootlogo.mvi
-	for i in ${MVI}; do
-		install -m 0755 ${S}/$i ${D}/usr/share/
-		ln -sf /usr/share/$i ${D}/boot/$i
-	done;
-	for i in ${MVISYMLINKS}; do
-		ln -sf /boot/bootlogo.mvi ${D}/boot/$i.mvi
-		ln -sf /usr/share/bootlogo.mvi ${D}/usr/share/$i.mvi;
-	done;
+	install -m 0755 ${BOOTLOGOMVI} ${D}/boot/bootlogo.mvi
+#	ln -sf /usr/share/bootlogo.mvi ${D}/boot/bootlogo.mvi
+#	for i in ${MVI}; do
+#		install -m 0755 ${S}/$i ${D}/usr/share/
+#		ln -sf /usr/share/$i ${D}/boot/$i
+#	done;
+#	for i in ${MVISYMLINKS}; do
+#		ln -sf /boot/bootlogo.mvi ${D}/boot/$i.mvi
+#		ln -sf /usr/share/bootlogo.mvi ${D}/usr/share/$i.mvi;
+#	done;
 	install -d ${D}/${sysconfdir}/init.d
 	install -m 0755 ${S}/bootlogo.sh ${D}/${sysconfdir}/init.d/bootlogo
 }

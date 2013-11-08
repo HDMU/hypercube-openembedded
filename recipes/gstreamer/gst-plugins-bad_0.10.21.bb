@@ -6,8 +6,8 @@ do_configure_prepend() {
     sed -i -e s:docs::g Makefile.am
 }
 
-DEPENDS += "gst-plugins-base"
-DEPENDS_openpli += "gst-plugins-base"
+DEPENDS += "gst-plugins-base librtmp"
+DEPENDS_openpli += "gst-plugins-base librtmp"
 
 EXTRA_OECONF_openpli += "--disable-apexsink --disable-dvdnav --disable-cdaudio --disable-mpeg2enc --disable-mplex --disable-librfb"
 
