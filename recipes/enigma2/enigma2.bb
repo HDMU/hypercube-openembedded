@@ -233,16 +233,9 @@ do_install_append() {
 	if [ -e ${S}/${sysconfdir}/motd ]; then
 		rm -rf ${S}/${sysconfdir}/motd
 	fi
-	wget -P ${S}/${sysconfdir}/ http://hdmedia-universe.com/image/motd
-	GITREV=`git log --pretty=format: | wc -l`
-	HDMUREV=`cd "$HOME"/HDMUenigma2 && git checkout arm && git log --pretty=format: | wc -l`
 	echo ${HDMUREV}
 	echo ${GITREV}
 	mkdir ${D}${sysconfdir}
-	echo "-----====== HDMU "${HDMUREV}" enigma2 Git "${GITREV}" ======-----" >> ${S}/${sysconfdir}/motd
-	echo "" >> ${S}/${sysconfdir}/motd
-	echo "" >> ${S}/${sysconfdir}/motd
-	install -m 0644 ${S}/${sysconfdir}/motd ${D}${sysconfdir}/motd
 	if [ -e ${S}/${sysconfdir}/.box ]; then
 		rm -rf ${S}/${sysconfdir}/.box
 	fi
