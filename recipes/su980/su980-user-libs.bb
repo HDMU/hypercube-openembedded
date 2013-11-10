@@ -5,7 +5,7 @@ MAINTAINER = "Archer Zhao <archer.zhao@sen5.com>"
 
 PV = '20130221'
 
-SRC_URI = "https://www.dropbox.com/s/quuixa3yw1943wt/su980-user-libs-${PV}.tar.gz"
+SRC_URI = "http://images.hdmedia-universe.com/anderes/su980-user-libs-${PV}.tar.gz"
 PROVIDES += "libciplus.so"
 
 FILES_${PN} = "${libdir}/*.so"

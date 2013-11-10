@@ -127,16 +127,16 @@ POPULATE_E2 = "\
 MACHINE_POSTPROCESS_COMMAND = "\
 	cd ${DL_DIR};\
 	if [ ! -e ${UPGRADE_SCRIPT_NAME}.scr ];then\
-		wget https://www.dropbox.com/s/ijnl4r5hyj4vrt3/${UPGRADE_SCRIPT_NAME}.scr;\
+		wget http://images.hdmedia-universe.com/anderes/${UPGRADE_SCRIPT_NAME}.scr;\
 	fi;\
 	if [ ! -e ${BOOT_NAME}.bin ];then\
-		wget https://www.dropbox.com/s/yz91h4pjcsrcowg/${BOOT_NAME}.bin;\
+		wget http://images.hdmedia-universe.com/anderes/${BOOT_NAME}.bin;\
 	fi;\
 	if [ ! -e ${LOADER_NAME}.bin ];then\
-		wget https://www.dropbox.com/s/faxul3mz77wlegk/${LOADER_NAME}.bin;\
+		wget http://images.hdmedia-universe.com/anderes/${LOADER_NAME}.bin;\
 	fi;\
 	if [ ! -e ${E2_KERNEL_NAME}.bin ];then\
-		wget https://www.dropbox.com/s/00ucag24zmcedef/${E2_KERNEL_NAME}.bin;\
+		wget http://images.hdmedia-universe.com/anderes/${E2_KERNEL_NAME}.bin;\
 	fi;\
 	cd ${DEPLOY_DIR_IMAGE};\
 	rm -rf release;\

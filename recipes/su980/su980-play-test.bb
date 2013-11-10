@@ -6,7 +6,7 @@ MAINTAINER = "Archer Zhao <archer.zhao@sen5.com>"
 PV = '20130124'
 PR = '2'
 
-SRC_URI = "https://www.dropbox.com/s/3vs09usu1kge919/su980-play-test-${PV}.tar.gz"
+SRC_URI = "http://images.hdmedia-universe.com/anderes/su980-play-test-${PV}.tar.gz"
 
 FILES_${PN} = "${bindir}/*"
 
